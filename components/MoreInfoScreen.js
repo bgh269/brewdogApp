@@ -11,15 +11,15 @@ export default function MoreInfoScreen({ navigation, route }) {
   const { item } = route.params;
 
   //const jos sisältö ei muutu
-  const malts = item.ingredients.malt.map((maltType) => {
+  const malts = item.item.ingredients.malt.map((maltType) => {
     return maltType.name;
   });
 
-  const hops = item.ingredients.hops.map((hopType) => {
+  const hops = item.item.ingredients.hops.map((hopType) => {
     return hopType.name;
   });
 
-  const foodPairing = item.food_pairing.map((dish) => {
+  const foodPairing = item.item.food_pairing.map((dish) => {
     return dish;
   });
 
@@ -39,17 +39,17 @@ export default function MoreInfoScreen({ navigation, route }) {
         containerStyle={{ backgroundColor: "#049ccc" }}
       ></Header>
 
-      <Text h3>{item.name}</Text>
+      <Text h3>{item.item.name}</Text>
       <ScrollView>
         <View style={styles.textStyle}>
           <Text style={{ fontSize: 20, fontWeight: "bold", paddingTop: 10 }}>
             Slogan
           </Text>
-          <Text style={{ fontSize: 18 }}>{item.tagline}</Text>
+          <Text style={{ fontSize: 18 }}>{item.item.tagline}</Text>
           <Text style={{ fontSize: 20, fontWeight: "bold", paddingTop: 10 }}>
             Description
           </Text>
-          <Text style={{ fontSize: 18 }}>{item.description}</Text>
+          <Text style={{ fontSize: 18 }}>{item.item.description}</Text>
           <Text style={{ fontSize: 20, fontWeight: "bold", paddingTop: 10 }}>
             Malts
           </Text>
@@ -61,7 +61,7 @@ export default function MoreInfoScreen({ navigation, route }) {
           <Text style={{ fontSize: 20, fontWeight: "bold", paddingTop: 10 }}>
             Yest
           </Text>
-          <Text style={{ fontSize: 18 }}>{item.ingredients.yeast}</Text>
+          <Text style={{ fontSize: 18 }}>{item.item.ingredients.yeast}</Text>
           <Text style={{ fontSize: 20, fontWeight: "bold", paddingTop: 10 }}>
             Food pairing
           </Text>

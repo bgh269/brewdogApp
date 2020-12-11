@@ -4,6 +4,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import HomeScreen from "./components/HomeSceen";
 import BeerlistScreen from "./components/BeerlistSceen";
 import MoreInfoScreen from "./components/MoreInfoScreen";
+import NotesScreen from "./components/NotesScreen";
 const Stack = createStackNavigator();
 
 export default function App() {
@@ -23,6 +24,11 @@ export default function App() {
         <Stack.Screen
           name="MoreInfo"
           component={MoreInfoScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Notes"
+          component={NotesScreen}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

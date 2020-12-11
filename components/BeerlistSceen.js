@@ -7,6 +7,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import MyCustomLeftComponent from "./MyCustomLeftComponent";
 import StarRatingSQLite from "./StarRatingSQLite";
 import StarRatingAsyncSto from "./StarRatingSyncSto";
+import NotesModal from "./NotesModal";
 
 const Stack = createStackNavigator();
 
@@ -30,10 +31,10 @@ export default function BeerlistScreen({ navigation }) {
 
   renderItem = (item) => (
     <Card>
-      <Card.Title style={{ fontSize: 25 }}>{item.name}</Card.Title>
+      <Card.Title style={{ fontSize: 25 }}>{item.item.name}</Card.Title>
       <Card.Divider />
       <Text style={{ marginBottom: 10, textAlign: "center", fontSize: 18 }}>
-        {item.tagline}
+        {item.item.tagline}
       </Text>
       <Button
         icon={
@@ -48,11 +49,10 @@ export default function BeerlistScreen({ navigation }) {
           borderRadius: 0,
           marginLeft: 0,
           marginRight: 0,
-          marginBottom: 0,
+          marginBottom: 10,
           backgroundColor: "#2891c9",
           flexDirection: "row",
           justifyContent: "space-evenly",
-          marginBottom: 5,
         }}
         iconRight={true}
         title="More information"
@@ -71,13 +71,14 @@ export default function BeerlistScreen({ navigation }) {
           borderRadius: 0,
           marginLeft: 0,
           marginRight: 0,
-          marginBottom: 0,
+          marginBottom: 15,
           backgroundColor: "#2891c9",
           flexDirection: "row",
           justifyContent: "space-evenly",
         }}
         iconRight={true}
-        title="Review"
+        title="Notes"
+        onPress={(() => navigation.navigate("Notes"), { item })}
       />
       {/*<StarRatingSQLite item={item.name} />*/}
       <StarRatingAsyncSto item={item} />

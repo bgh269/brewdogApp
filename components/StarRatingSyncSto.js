@@ -2,60 +2,62 @@ import React, { useEffect, useState } from "react";
 //import { Rating } from "react-native-ratings";
 import StarRating from "react-native-star-rating";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-//React ei importoidu?
-//Propsit ei välity?
+
 export default function StarRatingAsyncSto(props) {
   const [StarCount, setStarCount] = useState();
+
+  console.log(props);
 
   useEffect(() => {
     GetData();
   }, []);
-}
 
-const GetData = async () => {
-  try {
-    const value = await AsyncStorage.getItem(props.item.name);
-    if (value !== null) {
-      setStarCount(parseFloat(value));
+  const GetData = async () => {
+    try {
+      const value = await AsyncStorage.getItem(props.item.item.name);
+      if (value !== null) {
+        setStarCount(parseInt(value));
+      }
+    } catch (e) {
+      console.log("Key not found!");
     }
-  } catch (e) {
-    console.log("Key not found!");
-  }
-};
+  };
 
-const storeData = async (value) => {
-  try {
-    const obj = {
-      name: props.item.name,
-      starRating: value,
-    };
-    const jsonValue = JSON.stringify(obj);
-    setStarCount(value);
-    await AsyncStorage.setItem(props.item.name.toString(), value.toString());
-  } catch (e) {
-    // saving error
-  }
-};
+  const storeData = async (value) => {
+    try {
+      const obj = {
+        name: props.item.item.name,
+        starRating: value,
+      };
+      const jsonValue = JSON.stringify(obj);
+      setStarCount(value);
+      await AsyncStorage.setItem(
+        props.item.item.name.toString(),
+        value.toString()
+      );
+    } catch (e) {
+      // saving error
+    }
+  };
 
-return (
-  /* EN KEKSI MITEN SAISIN TOIMIMAAN TÄLLÄ
-  <Rating
-    type="star"
-    style={{ paddingVertical: 10 }}
-    onFinishRating={ratingCompleted}
-    // onChange={saveGivenStars}
-    ratingCount={5}
-    imageSize={30}
-    showRating
-    fractions={1}
-    startingValue={3.3}
-    minValue={0.1}
-    rating={StarRate}
-  />
-  */
-  <StarRating
-    maxStars={5}
-    rating={StarCount}
-    selectedStar={(rating) => storeData(rating)}
-  ></StarRating>
-);
+  return (
+    <StarRating
+      maxStars={5}
+      rating={StarCount}
+      selectedStar={(rating) => storeData(rating)}
+      fullStarColor={"orange"}
+      starSize={40}
+    ></StarRating>
+    /*
+    EN SAA TALLENNETTUA TÄLLÄ VALINTAA MUISTIIN
+    <Rating 
+      type="star"
+      style={{ paddingVertical: 10 }}
+      ratingCount={5}
+      imageSize={30}
+      showRating
+      onFinishRating={(rating) => storeData(rating)}
+    />
+    */
+  );
+}
