@@ -5,9 +5,8 @@ import { Header, Button, Card, Icon } from "react-native-elements";
 import { AntDesign } from "@expo/vector-icons";
 import { createStackNavigator } from "@react-navigation/stack";
 import MyCustomLeftComponent from "./MyCustomLeftComponent";
-import StarRatingSQLite from "./StarRatingSQLite";
+//import StarRatingSQLite from "./StarRatingSQLite";
 import StarRatingAsyncSto from "./StarRatingSyncSto";
-import NotesModal from "./NotesModal";
 
 const Stack = createStackNavigator();
 
@@ -78,7 +77,7 @@ export default function BeerlistScreen({ navigation }) {
         }}
         iconRight={true}
         title="Notes"
-        onPress={(() => navigation.navigate("Notes"), { item })}
+        onPress={() => navigation.navigate("Notes", { item })}
       />
       {/*<StarRatingSQLite item={item.name} />*/}
       <StarRatingAsyncSto item={item} />

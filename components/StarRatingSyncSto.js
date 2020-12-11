@@ -6,7 +6,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 export default function StarRatingAsyncSto(props) {
   const [StarCount, setStarCount] = useState();
 
-  console.log(props);
+  //console.log(props);
 
   useEffect(() => {
     GetData();
