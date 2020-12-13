@@ -30,9 +30,18 @@ export default function BeerlistScreen({ navigation }) {
 
   renderItem = (item) => (
     <Card>
-      <Card.Title style={{ fontSize: 25 }}>{item.item.name}</Card.Title>
+      <Card.Title style={{ fontFamily: "special_Elite", fontSize: 25 }}>
+        {item.item.name}
+      </Card.Title>
       <Card.Divider />
-      <Text style={{ marginBottom: 10, textAlign: "center", fontSize: 18 }}>
+      <Text
+        style={{
+          fontFamily: "special_Elite",
+          marginBottom: 10,
+          textAlign: "center",
+          fontSize: 18,
+        }}
+      >
         {item.item.tagline}
       </Text>
       <Button

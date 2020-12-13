@@ -5,6 +5,7 @@ import { Header, Button } from "react-native-elements";
 import { AntDesign } from "@expo/vector-icons";
 import { createStackNavigator } from "@react-navigation/stack";
 //import ImageLogo from "./components/ImageLogo";
+//import AwesomeButton from "react-native-really-awesome-button";
 
 const Stack = createStackNavigator();
 
@@ -48,7 +49,7 @@ export default function HomeScreen({ navigation }) {
     </View>
   );
 }
-//#006ca4, #003668,
+//#006ca4, #003668, #e00404
 
 const styles = StyleSheet.create({
   container: {

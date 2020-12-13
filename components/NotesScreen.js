@@ -5,6 +5,7 @@ import { Header, Text, Input, Button } from "react-native-elements";
 import { createStackNavigator } from "@react-navigation/stack";
 import MyCustomLeftComponent from "./MyCustomLeftComponent";
 import * as SQLite from "expo-sqlite";
+import { AntDesign } from "@expo/vector-icons";
 
 const Stack = createStackNavigator();
 
@@ -25,20 +26,20 @@ export default function MoreInfoScreen({ navigation, route }) {
         );
       },
       (t, error) => {
-        console.log("Error");
+        console.log("Error1");
       },
       updateList
     );
   }, []);
 
   //tallennetaan input-kentästä tulleet arvot tietokantaan
-  const saveItem = () => {
+  const savePoints = () => {
     db.transaction(
       (tx) => {
         tx.executeSql("insert into points (text) values (?);", [text]);
       },
       (t, error) => {
-        console.log("Error");
+        console.log("Error2");
       },
       updateList
     );
@@ -54,7 +55,7 @@ export default function MoreInfoScreen({ navigation, route }) {
   };
 
   //delete toiminto poistaa itemin tietokannan points taulusta ja päivitää flatlistan deletoinnin jälkeen
-  const deleteItem = (id) => {
+  const deletePoints = (id) => {
     db.transaction(
       (tx) => {
         tx.executeSql("delete from points where id = ?;", [id]);
@@ -94,21 +95,27 @@ export default function MoreInfoScreen({ navigation, route }) {
       <Button
         buttonStyle={{ width: 250 }}
         type="solid"
-        onPress={saveItem}
+        onPress={savePoints}
         title="save points"
       ></Button>
       <FlatList
         style={{ marginLeft: "5%" }}
-        keyExtractor={(item, index) => index.toString()}
+        keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
           <View style={styles.listContainer}>
             <Text style={{ fontSize: 15 }}>{item.item.text}</Text>
-            <Text
-              style={{ color: "#0000ff", fontSize: 15 }}
-              onPress={() => deleteItem(item.item.id)}
-            >
-              Done
-            </Text>
+            <Button
+              icon={
+                <AntDesign
+                  name="delete"
+                  size={24}
+                  color="#fff"
+                  style={{ alignItems: "flex-end" }}
+                />
+              }
+              iconRight={true}
+              onPress={() => deletePoints(item.item.id)}
+            ></Button>
           </View>
         )}
         data={points}
@@ -128,6 +135,10 @@ const styles = StyleSheet.create({
   input: {
     borderColor: "gray",
     borderWidth: 1,
+  },
+  listContainer: {
+    flexDirection: "row",
+    alignItems: "center",
   },
   /*
   textStyle: {

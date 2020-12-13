@@ -7,6 +7,7 @@ import MyCustomLeftComponent from "./MyCustomLeftComponent";
 
 const Stack = createStackNavigator();
 
+// FONTFAMILY EI TOIMI TÄÄLLÄ?
 export default function MoreInfoScreen({ navigation, route }) {
   const { item } = route.params;
 
@@ -39,7 +40,9 @@ export default function MoreInfoScreen({ navigation, route }) {
         containerStyle={{ backgroundColor: "#049ccc" }}
       ></Header>
 
-      <Text h3>{item.item.name}</Text>
+      <Text style={{ fontFamily: "special_Elite" }} h3>
+        {item.item.name}
+      </Text>
       <ScrollView>
         <View style={styles.textStyle}>
           <Text style={{ fontSize: 20, fontWeight: "bold", paddingTop: 10 }}>
@@ -88,5 +91,6 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "stretch",
     margin: 10,
+    fontFamily: "special_Elite",
   },
 });
