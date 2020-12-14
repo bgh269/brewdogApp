@@ -7,7 +7,6 @@ import MyCustomLeftComponent from "./MyCustomLeftComponent";
 
 const Stack = createStackNavigator();
 
-// FONTFAMILY EI TOIMI TÄÄLLÄ?
 export default function MoreInfoScreen({ navigation, route }) {
   const { item } = route.params;
 
@@ -40,35 +39,90 @@ export default function MoreInfoScreen({ navigation, route }) {
         containerStyle={{ backgroundColor: "#049ccc" }}
       ></Header>
 
-      <Text style={{ fontFamily: "special_Elite" }} h3>
+      <Text style={{ fontFamily: "special_Elite", fontSize: "25" }}>
         {item.item.name}
       </Text>
       <ScrollView>
         <View style={styles.textStyle}>
-          <Text style={{ fontSize: 20, fontWeight: "bold", paddingTop: 10 }}>
+          <Text
+            style={{
+              fontFamily: "special_Elite",
+              fontSize: 20,
+              fontWeight: "bold",
+              paddingTop: 10,
+            }}
+          >
             Slogan
           </Text>
-          <Text style={{ fontSize: 18 }}>{item.item.tagline}</Text>
-          <Text style={{ fontSize: 20, fontWeight: "bold", paddingTop: 10 }}>
+          <Text style={{ fontFamily: "special_Elite", fontSize: 18 }}>
+            {item.item.tagline}
+          </Text>
+          <Text
+            style={{
+              fontFamily: "special_Elite",
+              fontSize: 20,
+              fontWeight: "bold",
+              paddingTop: 10,
+            }}
+          >
             Description
           </Text>
-          <Text style={{ fontSize: 18 }}>{item.item.description}</Text>
-          <Text style={{ fontSize: 20, fontWeight: "bold", paddingTop: 10 }}>
+          <Text style={{ fontFamily: "special_Elite", fontSize: 18 }}>
+            {item.item.description}
+          </Text>
+          <Text
+            style={{
+              fontFamily: "special_Elite",
+              fontSize: 20,
+              fontWeight: "bold",
+              paddingTop: 10,
+            }}
+          >
             Malts
           </Text>
-          <Text style={{ fontSize: 18 }}> {malts.join("\n")} </Text>
-          <Text style={{ fontSize: 20, fontWeight: "bold", paddingTop: 10 }}>
+          <Text style={{ fontFamily: "special_Elite", fontSize: 18 }}>
+            {" "}
+            {malts.join("\n")}{" "}
+          </Text>
+          <Text
+            style={{
+              fontFamily: "special_Elite",
+              fontSize: 20,
+              fontWeight: "bold",
+              paddingTop: 10,
+            }}
+          >
             Hops
           </Text>
-          <Text style={{ fontSize: 18 }}>{hops.join("\n")} </Text>
-          <Text style={{ fontSize: 20, fontWeight: "bold", paddingTop: 10 }}>
+          <Text style={{ fontFamily: "special_Elite", fontSize: 18 }}>
+            {hops.join("\n")}{" "}
+          </Text>
+          <Text
+            style={{
+              fontFamily: "special_Elite",
+              fontSize: 20,
+              fontWeight: "bold",
+              paddingTop: 10,
+            }}
+          >
             Yest
           </Text>
-          <Text style={{ fontSize: 18 }}>{item.item.ingredients.yeast}</Text>
-          <Text style={{ fontSize: 20, fontWeight: "bold", paddingTop: 10 }}>
+          <Text style={{ fontFamily: "special_Elite", fontSize: 18 }}>
+            {item.item.ingredients.yeast}
+          </Text>
+          <Text
+            style={{
+              fontFamily: "special_Elite",
+              fontSize: 20,
+              fontWeight: "bold",
+              paddingTop: 10,
+            }}
+          >
             Food pairing
           </Text>
-          <Text style={{ fontSize: 18 }}>{foodPairing.join("\n")}</Text>
+          <Text style={{ fontFamily: "special_Elite", fontSize: 18 }}>
+            {foodPairing.join("\n")}
+          </Text>
         </View>
       </ScrollView>
       <StatusBar style="auto" />
@@ -91,6 +145,5 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "stretch",
     margin: 10,
-    fontFamily: "special_Elite",
   },
 });

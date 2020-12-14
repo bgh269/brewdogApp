@@ -48,7 +48,7 @@ export default function MoreInfoScreen({ navigation, route }) {
   //listan päivitys
   const updateList = () => {
     db.transaction((tx) => {
-      tx.executeSql("select * from course;", [], (_, { rows }) =>
+      tx.executeSql("select * from points;", [], (_, { rows }) =>
         setPoints(rows._array)
       );
     });
@@ -83,7 +83,9 @@ export default function MoreInfoScreen({ navigation, route }) {
         containerStyle={{ backgroundColor: "#049ccc" }}
       ></Header>
 
-      <Text h3>{item.item.name}</Text>
+      <Text style={{ fontFamily: "special_Elite", fontSize: 25 }}>
+        {item.item.name}
+      </Text>
       <Input
         style={styles.input}
         placeholder="give points"
@@ -103,7 +105,9 @@ export default function MoreInfoScreen({ navigation, route }) {
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
           <View style={styles.listContainer}>
-            <Text style={{ fontSize: 15 }}>{item.item.text}</Text>
+            <Text style={{ fontFamily: "special_Elite", fontSize: 15 }}>
+              {item.text}
+            </Text>
             <Button
               icon={
                 <AntDesign
@@ -114,7 +118,7 @@ export default function MoreInfoScreen({ navigation, route }) {
                 />
               }
               iconRight={true}
-              onPress={() => deletePoints(item.item.id)}
+              onPress={() => deletePoints(item.id)}
             ></Button>
           </View>
         )}
