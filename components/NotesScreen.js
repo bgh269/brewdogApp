@@ -1,6 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useEffect, useState } from "react";
-import { StyleSheet, View, FlatList } from "react-native";
+import { StyleSheet, View, FlatList, Dimensions } from "react-native";
 import { Header, Text, Input, Button } from "react-native-elements";
 import { createStackNavigator } from "@react-navigation/stack";
 import MyCustomLeftComponent from "./MyCustomLeftComponent";
@@ -8,6 +8,8 @@ import * as SQLite from "expo-sqlite";
 import { AntDesign } from "@expo/vector-icons";
 
 const Stack = createStackNavigator();
+
+const windowWidth = Dimensions.get("window").width;
 
 export default function MoreInfoScreen({ navigation, route }) {
   const { item } = route.params;
@@ -83,7 +85,7 @@ export default function MoreInfoScreen({ navigation, route }) {
         containerStyle={{ backgroundColor: "#049ccc" }}
       ></Header>
 
-      <Text style={{ fontFamily: "special_Elite", fontSize: 25 }}>
+      <Text style={{ fontFamily: "special_Elite", fontSize: 25, marginTop: 5 }}>
         {item.item.name}
       </Text>
       <Input
@@ -99,15 +101,18 @@ export default function MoreInfoScreen({ navigation, route }) {
         type="solid"
         onPress={savePoints}
         title="save points"
+        margin={10}
       ></Button>
       <FlatList
-        style={{ marginLeft: "5%" }}
+        style={{ margin: "5%" }}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
           <View style={styles.listContainer}>
             <Text style={{ fontFamily: "special_Elite", fontSize: 15 }}>
               {item.text}
+              {"   "}
             </Text>
+
             <Button
               icon={
                 <AntDesign
@@ -143,6 +148,11 @@ const styles = StyleSheet.create({
   listContainer: {
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "space-around",
+    maxWidth: windowWidth,
+    flexWrap: "wrap",
+    marginHorizontal: 50,
+    marginVertical: 5,
   },
   /*
   textStyle: {

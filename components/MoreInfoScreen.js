@@ -130,7 +130,7 @@ export default function MoreInfoScreen({ navigation, route }) {
   );
 }
 //.join() saa pilkut
-//HOX! FIXAA TEKSTIEN ASETTELU KUNTOON!!!
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
