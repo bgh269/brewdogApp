@@ -48,8 +48,7 @@ export default function MoreInfoScreen({ navigation, route }) {
             style={{
               fontFamily: "special_Elite",
               fontSize: 20,
-              fontWeight: "bold",
-              paddingTop: 10,
+              //paddingTop: 10,
             }}
           >
             Slogan
@@ -61,7 +60,6 @@ export default function MoreInfoScreen({ navigation, route }) {
             style={{
               fontFamily: "special_Elite",
               fontSize: 20,
-              fontWeight: "bold",
               paddingTop: 10,
             }}
           >
@@ -74,7 +72,6 @@ export default function MoreInfoScreen({ navigation, route }) {
             style={{
               fontFamily: "special_Elite",
               fontSize: 20,
-              fontWeight: "bold",
               paddingTop: 10,
             }}
           >
@@ -88,7 +85,6 @@ export default function MoreInfoScreen({ navigation, route }) {
             style={{
               fontFamily: "special_Elite",
               fontSize: 20,
-              fontWeight: "bold",
               paddingTop: 10,
             }}
           >
@@ -101,7 +97,6 @@ export default function MoreInfoScreen({ navigation, route }) {
             style={{
               fontFamily: "special_Elite",
               fontSize: 20,
-              fontWeight: "bold",
               paddingTop: 10,
             }}
           >
@@ -114,7 +109,6 @@ export default function MoreInfoScreen({ navigation, route }) {
             style={{
               fontFamily: "special_Elite",
               fontSize: 20,
-              fontWeight: "bold",
               paddingTop: 10,
             }}
           >
