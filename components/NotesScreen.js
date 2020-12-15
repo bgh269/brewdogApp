@@ -15,8 +15,8 @@ export default function MoreInfoScreen({ navigation, route }) {
   const { item } = route.params;
   // console.log(item);
   //tällä saa oikean oluen id:n
-  const beerId = item.item.id;
-  //console.log(beerId);
+  const beerid = item.item.id;
+  //console.log(beerid);
 
   const [text, setText] = useState("");
   const [points, setPoints] = useState([]);
@@ -28,7 +28,7 @@ export default function MoreInfoScreen({ navigation, route }) {
     db.transaction(
       (tx) => {
         tx.executeSql(
-          "create table if not exists points (id integer primary key not null, text text, beerId integer);"
+          "create table if not exists points (id integer primary key not null, text text, beerid integer);"
         );
       },
       (t, error) => {
@@ -38,13 +38,13 @@ export default function MoreInfoScreen({ navigation, route }) {
     );
   }, []);
 
-  //tallennetaan input-kentästä tulleet arvot tietokantaan
+  //tallennetaan arvot tietokantaan
   const savePoints = () => {
     db.transaction(
       (tx) => {
-        tx.executeSql("insert into points (text, beerId) values (?, ?);", [
+        tx.executeSql("insert into points (text, beerid) values (?, ?);", [
           text,
-          parseInt(beerId),
+          beerid,
         ]);
       },
       (t, error) => {
@@ -70,7 +70,7 @@ export default function MoreInfoScreen({ navigation, route }) {
         tx.executeSql("delete from points where id = ?;", [id]);
       },
       (t, error) => {
-        console.log("Error");
+        console.log("Error3");
       },
       updateList
     );
