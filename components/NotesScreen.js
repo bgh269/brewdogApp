@@ -13,6 +13,10 @@ const windowWidth = Dimensions.get("window").width;
 
 export default function MoreInfoScreen({ navigation, route }) {
   const { item } = route.params;
+  // console.log(item);
+  //tällä saa oikean oluen id:n
+  const beerId = item.item.id;
+  //console.log(beerId);
 
   const [text, setText] = useState("");
   const [points, setPoints] = useState([]);
@@ -24,7 +28,7 @@ export default function MoreInfoScreen({ navigation, route }) {
     db.transaction(
       (tx) => {
         tx.executeSql(
-          "create table if not exists points (id integer primary key not null, text text);"
+          "create table if not exists points (id integer primary key not null, text text, beerId integer);"
         );
       },
       (t, error) => {
@@ -38,7 +42,10 @@ export default function MoreInfoScreen({ navigation, route }) {
   const savePoints = () => {
     db.transaction(
       (tx) => {
-        tx.executeSql("insert into points (text) values (?);", [text]);
+        tx.executeSql("insert into points (text, beerId) values (?, ?);", [
+          text,
+          parseInt(beerId),
+        ]);
       },
       (t, error) => {
         console.log("Error2");
@@ -85,7 +92,9 @@ export default function MoreInfoScreen({ navigation, route }) {
         containerStyle={{ backgroundColor: "#049ccc" }}
       ></Header>
 
-      <Text style={{ fontFamily: "special_Elite", fontSize: 25, marginTop: 5 }}>
+      <Text
+        style={{ fontFamily: "special_Elite", fontSize: 25, paddingTop: 10 }}
+      >
         {item.item.name}
       </Text>
       <Input
@@ -101,7 +110,7 @@ export default function MoreInfoScreen({ navigation, route }) {
         type="solid"
         onPress={savePoints}
         title="save points"
-        margin={10}
+        padding={10}
       ></Button>
       <FlatList
         style={{ margin: "5%" }}

@@ -39,7 +39,15 @@ export default function MoreInfoScreen({ navigation, route }) {
         containerStyle={{ backgroundColor: "#049ccc" }}
       ></Header>
 
-      <Text style={{ fontFamily: "special_Elite", fontSize: "25" }}>
+      <Text
+        style={{
+          fontFamily: "special_Elite",
+          fontSize: 25,
+          alignItems: "center",
+          justifyContent: "center",
+          padding: 10,
+        }}
+      >
         {item.item.name}
       </Text>
       <ScrollView>
@@ -48,6 +56,7 @@ export default function MoreInfoScreen({ navigation, route }) {
             style={{
               fontFamily: "special_Elite",
               fontSize: 20,
+              textDecorationLine: "underline",
               //paddingTop: 10,
             }}
           >
@@ -60,6 +69,7 @@ export default function MoreInfoScreen({ navigation, route }) {
             style={{
               fontFamily: "special_Elite",
               fontSize: 20,
+              textDecorationLine: "underline",
               paddingTop: 10,
             }}
           >
@@ -72,6 +82,7 @@ export default function MoreInfoScreen({ navigation, route }) {
             style={{
               fontFamily: "special_Elite",
               fontSize: 20,
+              textDecorationLine: "underline",
               paddingTop: 10,
             }}
           >
@@ -85,6 +96,7 @@ export default function MoreInfoScreen({ navigation, route }) {
             style={{
               fontFamily: "special_Elite",
               fontSize: 20,
+              textDecorationLine: "underline",
               paddingTop: 10,
             }}
           >
@@ -97,6 +109,7 @@ export default function MoreInfoScreen({ navigation, route }) {
             style={{
               fontFamily: "special_Elite",
               fontSize: 20,
+              textDecorationLine: "underline",
               paddingTop: 10,
             }}
           >
@@ -109,6 +122,7 @@ export default function MoreInfoScreen({ navigation, route }) {
             style={{
               fontFamily: "special_Elite",
               fontSize: 20,
+              textDecorationLine: "underline",
               paddingTop: 10,
             }}
           >
