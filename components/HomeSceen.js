@@ -4,8 +4,6 @@ import { StyleSheet, Text, View, ImageBackground } from "react-native";
 import { Header, Button } from "react-native-elements";
 import { AntDesign } from "@expo/vector-icons";
 import { createStackNavigator } from "@react-navigation/stack";
-//import ImageLogo from "./components/ImageLogo";
-//import AwesomeButton from "react-native-really-awesome-button";
 
 const Stack = createStackNavigator();
 
@@ -61,7 +59,6 @@ const styles = StyleSheet.create({
   },
   backgroundImage: {
     flex: 1,
-    //resizeMode: "cover",
     justifyContent: "center",
     alignItems: "center",
     width: "100%",

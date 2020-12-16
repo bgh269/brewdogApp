@@ -1,10 +1,15 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useEffect, useState } from "react";
-import { StyleSheet, View, FlatList, Dimensions } from "react-native";
+import {
+  StyleSheet,
+  View,
+  FlatList,
+  Dimensions,
+  TouchableHighlight,
+} from "react-native";
 import { Header, Text, Input, Button } from "react-native-elements";
 import { createStackNavigator } from "@react-navigation/stack";
 import MyCustomLeftComponent from "./MyCustomLeftComponent";
-import { AntDesign } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Stack = createStackNavigator();
@@ -13,16 +18,17 @@ const windowWidth = Dimensions.get("window").width;
 
 export default function NotesScreen({ navigation, route }) {
   const { item } = route.params;
-  //tällä saa oikean oluen id:n
-  //const beerid = item.item.id;
-  // console.log(item.item.name);
+
   const [text, setText] = useState("");
   const [points, setPoints] = useState([]);
+  //tarvitaan tämä, jotta flatlista rerenderöi muutokset heti
+  const [refresh, setRefresh] = useState(false);
 
   useEffect(() => {
     GetData();
   }, []);
 
+  //haetaan JSON olio
   const GetData = async () => {
     try {
       const value = await AsyncStorage.getItem(item.item.name);
@@ -34,65 +40,60 @@ export default function NotesScreen({ navigation, route }) {
     }
   };
 
+  //tallennetaan muistiin inputista tulleet tekstit listaan
   const storeData = async () => {
     try {
+      setRefresh(true);
       const obj = points;
       obj.push(text);
       const jsonValue = JSON.stringify(obj);
       setPoints(obj);
+      console.log(points);
       await AsyncStorage.setItem(item.item.name.toString(), jsonValue);
+      setRefresh(false);
     } catch (e) {
       // saving error
     }
     console.log();
   };
 
-  /*
-  
-   Otetaan await koko lista, getItemilla text pois listasta, setPoits uusi lista, tallenna asyncSto
-*/
-  const deletePoints = async () => {
+  //filteröidään points-listalta yksittäinen item ja tallennetaan muuttunut lista points-listalle
+  const deletePoints = async (itemName) => {
     try {
+      setRefresh(true);
       const filteredPoints = points.filter(function (e) {
-        return e !== index;
+        return e !== itemName;
       });
+      console.log(filteredPoints);
+      setPoints(filteredPoints);
+      const jsonValue = JSON.stringify(filteredPoints);
+      await AsyncStorage.setItem(item.item.name.toString(), jsonValue);
+      console.log(filteredPoints);
+      setRefresh(false);
     } catch (error) {
       console.log(error);
     }
-    console.log(filteredPoints);
   };
-  /*
-   try {
-      const pointsJSON = await AsyncStorage.getItem(item.item.name);
-      let pointTxt = JSON.parse(pointsJSON);
-      const pointsItems = pointTxt.filter(function (e) {
-        return e !== index;
-      });
-      //päivitetään points lista päivitetyllä pointsItems listalla
-      await AsyncStorage.setItem(
-        item.item.name.toString(),
-        JSON.stringify(pointsItems)
-      );
-    } catch (error) {
-      console.log(error);
-    }
-    //console.log(item.item.name);
-  }; 
 
-    try {
-      const pointsJSON = await AsyncStorage.getItem(points);
-      let pointTxt = JSON.parse(pointsJSON);
-      const pointsItems = pointTxt.filter(function (e) {
-        return e !== id;
-      });
-      //päivitetään points lista päivitetyllä pointsItems listalla
-      await AsyncStorage.setItem(points, JSON.stringify(pointsItems));
-    } catch (error) {
-      console.log(error);
-    }
+  const renderItem = (item) => {
+    return (
+      <View style={styles.listContainer}>
+        <Text style={{ fontFamily: "special_Elite", fontSize: 18 }}>
+          {item}
+        </Text>
+
+        <TouchableHighlight>
+          <Text
+            onPress={() => deletePoints(item)}
+            style={{ color: "#e00404", fontWeight: "bold" }}
+          >
+            DELETE
+          </Text>
+        </TouchableHighlight>
+      </View>
+    );
   };
-  console.log(points);
-*/
+
   return (
     <View style={styles.container}>
       <Header
@@ -110,13 +111,13 @@ export default function NotesScreen({ navigation, route }) {
       ></Header>
 
       <Text
-        style={{ fontFamily: "special_Elite", fontSize: 25, paddingTop: 10 }}
+        style={{ fontFamily: "special_Elite", fontSize: 30, paddingTop: 10 }}
       >
         {item.item.name}
       </Text>
       <Input
         style={styles.input}
-        placeholder="give points"
+        placeholder=" give points"
         label="Points"
         multiline={true}
         onChangeText={(text) => setText(text)}
@@ -132,27 +133,9 @@ export default function NotesScreen({ navigation, route }) {
       <FlatList
         style={{ margin: "5%", width: 350 }}
         keyExtractor={(item, index) => index.toString()}
-        renderItem={({ item }) => (
-          <View style={styles.listContainer}>
-            <Text style={{ fontFamily: "special_Elite", fontSize: 15 }}>
-              {item}
-            </Text>
-
-            <Button
-              icon={
-                <AntDesign
-                  name="delete"
-                  size={24}
-                  color="#fff"
-                  style={{ alignItems: "flex-end" }}
-                />
-              }
-              iconRight={true}
-              onPress={() => deletePoints(item.id)}
-            ></Button>
-          </View>
-        )}
         data={points}
+        extraData={refresh}
+        renderItem={({ item }) => renderItem(item)}
       ></FlatList>
       <StatusBar style="auto" />
     </View>
@@ -174,20 +157,10 @@ const styles = StyleSheet.create({
   listContainer: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-around",
+    justifyContent: "space-between",
     maxWidth: windowWidth,
     flexWrap: "wrap",
     marginHorizontal: 50,
     marginVertical: 5,
   },
-  /*
-    textStyle: {
-      flex: 2,
-      //alignContent: "center",
-      flexDirection: "column",
-      justifyContent: "flex-start",
-      alignItems: "stretch",
-      margin: 10,
-    },
-    */
 });

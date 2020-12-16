@@ -6,12 +6,11 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 export default function StarRatingAsyncSto(props) {
   const [StarCount, setStarCount] = useState();
 
-  //console.log(props);
-
   useEffect(() => {
     GetData();
   }, []);
 
+  //haetaan data beerlistScreeniltä
   const GetData = async () => {
     try {
       const value = await AsyncStorage.getItem(props.item.item.name);
@@ -23,6 +22,7 @@ export default function StarRatingAsyncSto(props) {
     }
   };
 
+  //tallennetaan data muistiin
   const storeData = async (value) => {
     try {
       const obj = {

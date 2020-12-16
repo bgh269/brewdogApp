@@ -10,7 +10,7 @@ const Stack = createStackNavigator();
 export default function MoreInfoScreen({ navigation, route }) {
   const { item } = route.params;
 
-  //const jos sisältö ei muutu
+  //map,jotta saa sisäkkäisen taulun tiedot tulostettua
   const malts = item.item.ingredients.malt.map((maltType) => {
     return maltType.name;
   });
@@ -42,7 +42,7 @@ export default function MoreInfoScreen({ navigation, route }) {
       <Text
         style={{
           fontFamily: "special_Elite",
-          fontSize: 25,
+          fontSize: 30,
           alignItems: "center",
           justifyContent: "center",
           padding: 10,
@@ -55,9 +55,8 @@ export default function MoreInfoScreen({ navigation, route }) {
           <Text
             style={{
               fontFamily: "special_Elite",
-              fontSize: 20,
+              fontSize: 25,
               textDecorationLine: "underline",
-              //paddingTop: 10,
             }}
           >
             Slogan
@@ -68,7 +67,7 @@ export default function MoreInfoScreen({ navigation, route }) {
           <Text
             style={{
               fontFamily: "special_Elite",
-              fontSize: 20,
+              fontSize: 25,
               textDecorationLine: "underline",
               paddingTop: 10,
             }}
@@ -81,7 +80,7 @@ export default function MoreInfoScreen({ navigation, route }) {
           <Text
             style={{
               fontFamily: "special_Elite",
-              fontSize: 20,
+              fontSize: 25,
               textDecorationLine: "underline",
               paddingTop: 10,
             }}
@@ -95,7 +94,7 @@ export default function MoreInfoScreen({ navigation, route }) {
           <Text
             style={{
               fontFamily: "special_Elite",
-              fontSize: 20,
+              fontSize: 25,
               textDecorationLine: "underline",
               paddingTop: 10,
             }}
@@ -108,7 +107,7 @@ export default function MoreInfoScreen({ navigation, route }) {
           <Text
             style={{
               fontFamily: "special_Elite",
-              fontSize: 20,
+              fontSize: 25,
               textDecorationLine: "underline",
               paddingTop: 10,
             }}
@@ -121,7 +120,7 @@ export default function MoreInfoScreen({ navigation, route }) {
           <Text
             style={{
               fontFamily: "special_Elite",
-              fontSize: 20,
+              fontSize: 25,
               textDecorationLine: "underline",
               paddingTop: 10,
             }}
@@ -137,7 +136,6 @@ export default function MoreInfoScreen({ navigation, route }) {
     </View>
   );
 }
-//.join() saa pilkut
 
 const styles = StyleSheet.create({
   container: {
