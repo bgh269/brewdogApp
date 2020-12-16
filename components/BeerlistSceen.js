@@ -61,6 +61,7 @@ export default function BeerlistScreen({ navigation }) {
           backgroundColor: "#2891c9",
           flexDirection: "row",
           justifyContent: "space-evenly",
+          borderRadius: 10,
         }}
         iconRight={true}
         title="More information"
@@ -83,6 +84,7 @@ export default function BeerlistScreen({ navigation }) {
           backgroundColor: "#2891c9",
           flexDirection: "row",
           justifyContent: "space-evenly",
+          borderRadius: 10,
         }}
         iconRight={true}
         title="Notes"

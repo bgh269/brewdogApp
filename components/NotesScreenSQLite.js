@@ -4,64 +4,78 @@ import { StyleSheet, View, FlatList, Dimensions } from "react-native";
 import { Header, Text, Input, Button } from "react-native-elements";
 import { createStackNavigator } from "@react-navigation/stack";
 import MyCustomLeftComponent from "./MyCustomLeftComponent";
+import * as SQLite from "expo-sqlite";
 import { AntDesign } from "@expo/vector-icons";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Stack = createStackNavigator();
 
 const windowWidth = Dimensions.get("window").width;
 
-export default function NotesScreen({ navigation, route }) {
+export default function MoreInfoScreen({ navigation, route }) {
   const { item } = route.params;
+  // console.log(item);
   //tällä saa oikean oluen id:n
-  //const beerid = item.item.id;
-  // console.log(item.item.name);
+  const beerid = item.item.id;
+  //console.log(beerid);
+
   const [text, setText] = useState("");
   const [points, setPoints] = useState([]);
 
+  //tallennetaan db objektiin tietokannan avaus
+  const db = SQLite.openDatabase("pointsdb.db");
+
   useEffect(() => {
-    GetData();
+    db.transaction(
+      (tx) => {
+        tx.executeSql(
+          "create table if not exists points (id integer primary key not null, text text, beerid integer);"
+        );
+      },
+      (t, error) => {
+        console.log("Error1");
+      },
+      updateList
+    );
   }, []);
 
-  const GetData = async () => {
-    try {
-      const value = await AsyncStorage.getItem(item.item.name);
-      if (value !== null) {
-        setPoints(value);
-      }
-    } catch (e) {
-      console.log("Key not found!");
-    }
+  //tallennetaan arvot tietokantaan
+  const savePoints = () => {
+    db.transaction(
+      (tx) => {
+        tx.executeSql("insert into points (text, beerid) values (?, ?);", [
+          text,
+          beerid,
+        ]);
+      },
+      (t, error) => {
+        console.log("Error2");
+      },
+      updateList
+    );
   };
 
-  const storeData = async (value) => {
-    try {
-      const obj = {
-        name: item.item.name,
-        //beerid: beerid,
-        text: value,
-      };
-      const jsonValue = JSON.stringify(obj);
-      setPoints(value);
-      await AsyncStorage.setItem(item.item.name.toString(), value.toString());
-    } catch (e) {
-      // saving error
-    }
+  //listan päivitys
+  const updateList = () => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        "select text from points group by beerid;",
+        [],
+        (_, { rows }) => setPoints(rows._array)
+      );
+    });
   };
 
-  const displayData = async (value) => {
-    try {
-      text = await AsyncStorage.getItem(value);
-      let parsed = JSON.parse(text);
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  const deletePoints = async () => {
-    try {
-      await AsyncStorage.removeItem(obj);
-    } catch (error) {}
+  //delete toiminto poistaa itemin tietokannan points taulusta ja päivitää flatlistan deletoinnin jälkeen
+  const deletePoints = (id) => {
+    db.transaction(
+      (tx) => {
+        tx.executeSql("delete from points where id = ?;", [id]);
+      },
+      (t, error) => {
+        console.log("Error3");
+      },
+      updateList
+    );
   };
 
   return (
@@ -94,15 +108,15 @@ export default function NotesScreen({ navigation, route }) {
         value={text}
       ></Input>
       <Button
-        buttonStyle={{ width: 250, borderRadius: 10 }}
+        buttonStyle={{ width: 250 }}
         type="solid"
-        onPress={(storeData, displayData)}
+        onPress={savePoints}
         title="save points"
         padding={10}
       ></Button>
       <FlatList
         style={{ margin: "5%" }}
-        keyExtractor={(item, index) => index.toString()}
+        keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
           <View style={styles.listContainer}>
             <Text style={{ fontFamily: "special_Elite", fontSize: 15 }}>
@@ -141,7 +155,6 @@ const styles = StyleSheet.create({
   input: {
     borderColor: "gray",
     borderWidth: 1,
-    borderRadius: 6,
   },
   listContainer: {
     flexDirection: "row",
@@ -153,13 +166,13 @@ const styles = StyleSheet.create({
     marginVertical: 5,
   },
   /*
-    textStyle: {
-      flex: 2,
-      //alignContent: "center",
-      flexDirection: "column",
-      justifyContent: "flex-start",
-      alignItems: "stretch",
-      margin: 10,
-    },
-    */
+  textStyle: {
+    flex: 2,
+    //alignContent: "center",
+    flexDirection: "column",
+    justifyContent: "flex-start",
+    alignItems: "stretch",
+    margin: 10,
+  },
+  */
 });

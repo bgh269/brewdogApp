@@ -38,6 +38,7 @@ export default function HomeScreen({ navigation }) {
             flexDirection: "row",
             justifyContent: "space-around",
             width: 180,
+            borderRadius: 10,
           }}
           iconRight={true}
           title="To beer listing"
