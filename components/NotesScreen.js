@@ -27,43 +27,61 @@ export default function NotesScreen({ navigation, route }) {
     try {
       const value = await AsyncStorage.getItem(item.item.name);
       if (value !== null) {
-        setPoints(value);
+        setPoints(JSON.parse(value));
       }
     } catch (e) {
       console.log("Key not found!");
     }
   };
 
-  const storeData = async (value) => {
+  const storeData = async () => {
     try {
-      const obj = {
-        name: item.item.name,
-        //beerid: beerid,
-        text: value,
-      };
+      const obj = points;
+      obj.push(text);
       const jsonValue = JSON.stringify(obj);
-      setPoints(value);
-      await AsyncStorage.setItem(item.item.name.toString(), value.toString());
+      setPoints(obj);
+      await AsyncStorage.setItem(item.item.name.toString(), jsonValue);
     } catch (e) {
       // saving error
     }
   };
-
-  const displayData = async (value) => {
+  /*
+  
+   Otetaan await koko lista, getItemilla text pois listasta, setPoits uusi lista, tallenna asyncSto
+*/
+  const deletePoints = async (id) => {
     try {
-      text = await AsyncStorage.getItem(value);
-      let parsed = JSON.parse(text);
-    } catch (e) {
-      console.log(e);
+      const pointsJSON = await AsyncStorage.getItem(item.item.name);
+      let pointTxt = JSON.parse(pointsJSON);
+      const pointsItems = pointTxt.filter(function (e) {
+        return e !== id;
+      });
+      //päivitetään points lista päivitetyllä pointsItems listalla
+      await AsyncStorage.setItem(
+        item.item.name.toString(),
+        JSON.stringify(pointsItems)
+      );
+    } catch (error) {
+      console.log(error);
+    }
+    //console.log(item.item.name);
+  };
+  console.log(item.item.id);
+  /*
+    try {
+      const pointsJSON = await AsyncStorage.getItem(points);
+      let pointTxt = JSON.parse(pointsJSON);
+      const pointsItems = pointTxt.filter(function (e) {
+        return e !== id;
+      });
+      //päivitetään points lista päivitetyllä pointsItems listalla
+      await AsyncStorage.setItem(points, JSON.stringify(pointsItems));
+    } catch (error) {
+      console.log(error);
     }
   };
-
-  const deletePoints = async () => {
-    try {
-      await AsyncStorage.removeItem(obj);
-    } catch (error) {}
-  };
-
+  console.log(points);
+*/
   return (
     <View style={styles.container}>
       <Header
@@ -96,18 +114,17 @@ export default function NotesScreen({ navigation, route }) {
       <Button
         buttonStyle={{ width: 250, borderRadius: 10 }}
         type="solid"
-        onPress={(storeData, displayData)}
+        onPress={() => storeData()}
         title="save points"
         padding={10}
       ></Button>
       <FlatList
-        style={{ margin: "5%" }}
+        style={{ margin: "5%", width: 350 }}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item }) => (
           <View style={styles.listContainer}>
             <Text style={{ fontFamily: "special_Elite", fontSize: 15 }}>
-              {item.text}
-              {"   "}
+              {item}
             </Text>
 
             <Button
