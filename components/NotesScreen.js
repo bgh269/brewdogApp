@@ -44,17 +44,29 @@ export default function NotesScreen({ navigation, route }) {
     } catch (e) {
       // saving error
     }
+    console.log();
   };
+
   /*
   
    Otetaan await koko lista, getItemilla text pois listasta, setPoits uusi lista, tallenna asyncSto
 */
-  const deletePoints = async (id) => {
+  const deletePoints = async () => {
     try {
+      const filteredPoints = points.filter(function (e) {
+        return e !== index;
+      });
+    } catch (error) {
+      console.log(error);
+    }
+    console.log(filteredPoints);
+  };
+  /*
+   try {
       const pointsJSON = await AsyncStorage.getItem(item.item.name);
       let pointTxt = JSON.parse(pointsJSON);
       const pointsItems = pointTxt.filter(function (e) {
-        return e !== id;
+        return e !== index;
       });
       //päivitetään points lista päivitetyllä pointsItems listalla
       await AsyncStorage.setItem(
@@ -65,9 +77,8 @@ export default function NotesScreen({ navigation, route }) {
       console.log(error);
     }
     //console.log(item.item.name);
-  };
-  console.log(item.item.id);
-  /*
+  }; 
+
     try {
       const pointsJSON = await AsyncStorage.getItem(points);
       let pointTxt = JSON.parse(pointsJSON);
